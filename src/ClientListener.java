@@ -19,13 +19,14 @@ public class ClientListener extends Thread {
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-
     /**
      * Ler mensagens do cliente socket, redireciona para a fila do server transmisor
      * e o server transmisor envia a mensagem
      */
     public void run() {
         try {
+            clienteInfo.setUsername(input.readLine());
+            serverTransmisor.informeNovoUsuario(clienteInfo);
             while (!isInterrupted()) {
                 String message = input.readLine();
                 if (message == null)

@@ -1,4 +1,6 @@
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Vector;
 
 /**
@@ -7,6 +9,8 @@ import java.util.Vector;
 public class ServerTransmisor extends Thread {
     private Vector mMessageQueue = new Vector();
     private Vector listClientes = new Vector();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+    private static final String MENSAGEM_DO_SISTEMA = "[SYSTEM]";
 
     public synchronized void addCliente(ClienteInfo clienteInfo) {
         listClientes.add(clienteInfo);
@@ -21,12 +25,18 @@ public class ServerTransmisor extends Thread {
 
     public synchronized void transmitirMensagem(ClienteInfo clienteInfo, String mensagem) {
         Socket socket = clienteInfo.getSocket();
-        String hostOrigem = socket.getInetAddress().getHostAddress();
-        String portaOrigem = "" + socket.getPort();
-        mensagem = hostOrigem + ":" + portaOrigem + " : " + mensagem;
+        mensagem = String.format("[%s] %s : %s", LocalDateTime.now().format(formatter), clienteInfo.getUsername(), mensagem);
         mMessageQueue.add(mensagem);
         notify();
     }
+
+    public synchronized void informeNovoUsuario(ClienteInfo clienteInfo) {
+        Socket socket = clienteInfo.getSocket();
+        String mensagem = String.format("%s[%s] %s entrou no chat", MENSAGEM_DO_SISTEMA , LocalDateTime.now().format(formatter), clienteInfo.getUsername());
+        mMessageQueue.add(mensagem);
+        notify();
+    }
+
 
     private synchronized String getProximaMensagemDaFila() throws InterruptedException {
         while (mMessageQueue.size()==0) {

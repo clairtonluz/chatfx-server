@@ -5,6 +5,7 @@ import java.net.Socket;
  */
 public class ClienteInfo {
 
+    private String username;
     private Socket socket = null;
     private ClientListener clienteListener = null;
     private ClienteEnviador clienteEnviador = null;
@@ -31,5 +32,13 @@ public class ClienteInfo {
 
     public void setClienteEnviador(ClienteEnviador clienteEnviador) {
         this.clienteEnviador = clienteEnviador;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
