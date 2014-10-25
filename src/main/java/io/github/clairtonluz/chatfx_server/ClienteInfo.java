@@ -1,3 +1,5 @@
+package io.github.clairtonluz.chatfx_server;
+
 import java.net.Socket;
 
 /**

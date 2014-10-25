@@ -1,3 +1,5 @@
+package io.github.clairtonluz.chatfx_server;
+
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
