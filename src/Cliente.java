@@ -26,12 +26,4 @@ public class Cliente {
         }
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        Cliente c = new Cliente();
-        c.enviar("Testando 123");
-        Thread.sleep(500);
-        c.enviar("Testando 1");
-        Thread.sleep(500);
-        c.enviar("Testando 3");
-    }
 }

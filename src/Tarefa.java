@@ -30,8 +30,7 @@ public class Tarefa implements Runnable {
 
                 output.close();
                 input.close();
-                System.out.println("Server txt " + this.serverText);
-                System.out.println("Request processed: " + time);
+                System.out.println(line);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -58,7 +58,7 @@ public class ServidorMultiThread implements Runnable {
         try {
             this.serverSocket = new ServerSocket(this.serverPort);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot open port " + this.serverPort, e);
+            throw new RuntimeException("Não pode abrir a porta " + this.serverPort, e);
         }
     }
 
