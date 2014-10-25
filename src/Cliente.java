@@ -4,28 +4,34 @@ import java.io.PrintStream;
 import java.net.Socket;
 
 public class Cliente {
+    int port = 9000;
+    //		String hostname = "192.168.0.5";
+    String hostname = "localhost";
+    private Socket clientSocket;
 
-	public static void main(String[] args) {
-		int port = 1024;
-//		String hostname = "192.168.0.5";
-		String hostname = "localhost";
-		try (Socket cliente = new Socket(hostname, port)) {
-			DataInputStream in = new DataInputStream(cliente.getInputStream());
-			PrintStream out = new PrintStream(cliente.getOutputStream());
-			DataInputStream userInput = new DataInputStream(System.in);
-			String line;
+    public void enviar(String mensagem) {
 
-			while (true) {
-				System.out.print(">");
-				line = userInput.readLine();
-				if ((line == null) || line.equals("exit"))
-					break;
-				out.println(line);
-				line = in.readLine();
-				System.out.println(line);
-			}
-		} catch (IOException e) {
-			System.err.println(e);
-		}
-	}
+        try {
+            this.clientSocket = new Socket(hostname, port);
+            DataInputStream in = new DataInputStream(clientSocket.getInputStream());
+            PrintStream out = new PrintStream(clientSocket.getOutputStream());
+            DataInputStream userInput = new DataInputStream(System.in);
+
+            if ((mensagem != null) || !mensagem.isEmpty()) {
+                out.println(mensagem);
+            }
+
+        } catch (IOException e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Cliente c = new Cliente();
+        c.enviar("Testando 123");
+        Thread.sleep(500);
+        c.enviar("Testando 1");
+        Thread.sleep(500);
+        c.enviar("Testando 3");
+    }
 }
