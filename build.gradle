@@ -1,5 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'application'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 group = 'io.github.clairtonluz'
 version = '1.0'
@@ -9,9 +12,17 @@ description = """chatfx-server"""
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-
+group = 'io.github.clairtonluz'
+mainClassName = 'io.github.clairtonluz.chatfx_server.ChatServer'
 
 repositories {
         
      maven { url "http://repo.maven.apache.org/maven2" }
 }
+
+jar {
+  manifest {
+    attributes 'Implementation-Title': 'chatfx', 'Main-Class': 'io.github.clairtonluz.chatfx_server.ChatServer', 'Class-Path': configurations.compile.collect { it.getName() }.join(' ')
+  }
+}
+
